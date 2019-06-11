@@ -1,147 +1,95 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 
 public class GUI {
-    private JTextArea question;
-    private JTextArea answer;
-    private ArrayList<Card> cardList;
-    private JFrame frame;
-    private BufferedWriter writer;
-    public void init(){
-        // build gui
-        frame = new JFrame("Quiz Card Builder");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // title bar
-        JPanel mainPanel = new JPanel();
-        Font bigFont = new Font("sanserif", Font.BOLD, 24);
-        question = new JTextArea(6,20);
-        question.setLineWrap(true);
-        question.setWrapStyleWord(true);
-        question.setFont(bigFont);
+    //frame
+    //panels
+    //filemenu
+    //buttons to create a deck or load a deck
+    //handling to go change frame to new
 
-        JScrollPane qScroller = new JScrollPane(question);
-        qScroller.setVerticalScrollBarPolicy(
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        qScroller.setHorizontalScrollBarPolicy(
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    JFrame frame;
+    JPanel panel;
+    JTabbedPane tabbedPane;
 
-        answer = new JTextArea(6,20);
-        answer.setLineWrap(true);
-        answer.setWrapStyleWord(true);
-        answer.setFont(bigFont);
+    public void init() {
 
-        //create and add vertical scrolls to text area
-        JScrollPane aScroller = new JScrollPane(answer);
-        aScroller.setVerticalScrollBarPolicy(
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        aScroller.setHorizontalScrollBarPolicy(
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        frame = new JFrame("Flash Card Builder");
 
-        //create next button
-        JButton nextButton = new JButton("Next Card");
-        cardList = new ArrayList();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel qLabel = new JLabel("Question:");
-        JLabel aLabel = new JLabel("Answer:");
+        //Add content to the window.
+        frame.add(new TabbedPane(), BorderLayout.CENTER);
 
-        //add components to panel
-        mainPanel.add(qLabel);
-        mainPanel.add(qScroller);
-        mainPanel.add(aLabel);
-        mainPanel.add(aScroller);
-        mainPanel.add(nextButton);
-
-        //create menubar add jmenu file and item new
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-
-        //create menu items
-        JMenuItem newMenuItem = new JMenuItem("New Deck");
-        JMenuItem saveMenuItem = new JMenuItem("Save Deck");
-        JMenuItem loadMenuItem = new JMenuItem("Load Deck");
-
-        //add menu items to menu
-        fileMenu.add(newMenuItem);
-        fileMenu.add(saveMenuItem);
-
-        //add file menu to menubar
-        menuBar.add(fileMenu);
-        //add listeners to buttons
-        nextButton.addActionListener(new NextCardEventListener());
-        saveMenuItem.addActionListener(new SaveCardEventListener());
-        newMenuItem.addActionListener(new NewMenuListener());
-
-        //set menubar to frame
-        frame.setJMenuBar(menuBar);
-
-        frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
-        frame.setSize(500,600);
+        //Display the window.
+        frame.pack();
         frame.setVisible(true);
+
     }
 
+    public class TabbedPane extends JPanel {
+        public TabbedPane() {
+            super(new GridLayout(1, 1));
 
-    public class NextCardEventListener implements ActionListener{
-    //TODO add empty card exception handling
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Card card = new Card(question.getText(),answer.getText());
-            cardList.add(card);
-            clearCards();
+            JTabbedPane tabbedPane = new JTabbedPane();
+            ImageIcon icon = createImageIcon("images/image.jpg");
+
+            CardBuilder createPanel = new CardBuilder();
+            tabbedPane.addTab("Create", icon, createPanel,
+                    "Does nothing");
+            tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+
+            JComponent panel2 = makeTextPanel("Panel #2");
+            tabbedPane.addTab("Edit", icon, panel2,
+                    "Does twice as much nothing");
+            tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+
+            JComponent panel3 = makeTextPanel("Panel #3");
+            tabbedPane.addTab("Play", icon, panel3,
+                    "Still does nothing");
+            tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+            panel3.setPreferredSize(new Dimension(500, 500));
+
+
+
+            //Add the tabbed pane to this panel.
+            add(tabbedPane);
+
+            //The following line enables to use scrolling tabs.
+            tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         }
-    }
 
-    public class SaveCardEventListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Card card = new Card(question.getText(),answer.getText());
-            JFileChooser fileSave = new JFileChooser();
-            fileSave.showOpenDialog(frame);
-            saveFile(fileSave.getSelectedFile());
 
+
+
+
+
+        protected JComponent makeTextPanel(String text) {
+            JPanel panel = new JPanel(false);
+            JLabel filler = new JLabel(text);
+            JButton button = new JButton("test");
+            panel.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            panel.add(filler,gbc);
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            panel.add(button,gbc);
+
+            return panel;
         }
-    }
-    //Creates new card deck and clears the card
-    public class NewMenuListener implements ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            cardList.clear();
-            clearCards();
-        }
-    }
-    public void clearCards(){
-        question.setText("");
-        answer.setText("");
-    }
-
-    //Saves the file to a file
-    public void saveFile(File file){
-        try {
-             writer = new BufferedWriter(new FileWriter(file));
-            for(Card card:cardList){
-                writer.write(card.getQuestion()+"*");
-                writer.write(card.getAnswer()+"$");
+        protected ImageIcon createImageIcon(String path) {
+            java.net.URL imgURL = GUI.class.getResource(path);
+            if (imgURL != null) {
+                return new ImageIcon(imgURL);
+            } else {
+                System.err.println("Couldn't find file: " + path);
+                return null;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally{
-            try {
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
     }
-
-
-
-    //card builder
-    //card player
 }
