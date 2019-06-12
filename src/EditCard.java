@@ -129,9 +129,15 @@ public class EditCard extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileLoad = new JFileChooser();
-            fileLoad.showOpenDialog(frame);
-            loadFile(fileLoad.getSelectedFile());
+            try{
+                String userhome = System.getProperty("user.home");
+                JFileChooser fileLoad = new JFileChooser(userhome +"\\repos"+"\\FlashCards");
+                fileLoad.showOpenDialog(frame);
+                loadFile(fileLoad.getSelectedFile());
+            }catch(NullPointerException ex){
+
+            }
+
         }
     }
     //Creates new card deck and clears the card

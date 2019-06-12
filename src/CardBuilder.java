@@ -106,10 +106,16 @@ public class CardBuilder extends JPanel {
     public class SaveCardEventListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Card card = new Card(question.getText(),answer.getText());
-            JFileChooser fileSave = new JFileChooser();
-            fileSave.showOpenDialog(frame);
-            saveFile(fileSave.getSelectedFile());
+            try{
+                Card card = new Card(question.getText(),answer.getText());
+                cardList.add(card);
+                String userhome = System.getProperty("user.home");
+                JFileChooser fileSave = new JFileChooser(userhome +"\\repos"+"\\FlashCards");
+                fileSave.showOpenDialog(frame);
+                saveFile(fileSave.getSelectedFile());
+
+            }catch(NullPointerException ex){}
+
 
         }
     }
