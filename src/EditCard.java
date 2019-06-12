@@ -2,20 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
-public class CardBuilder extends JPanel {
-
+public class EditCard extends JPanel {
     private JTextArea question;
     private JTextArea answer;
     private ArrayList<Card> cardList;
     private JFrame frame;
     private BufferedWriter writer;
-    public CardBuilder(){
+    private BufferedReader reader;
+    private String[] strCards;
+    private int cardCount = 0;
+
+    public EditCard(){
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -52,7 +53,7 @@ public class CardBuilder extends JPanel {
         JLabel aLabel = new JLabel("Answer:");
 
         JButton saveButton = new JButton("Save Deck");
-        JButton newButton = new JButton("New Deck");
+        JButton loadButton = new JButton("Load Deck");
 
         //add components to panel
         gbc.gridx = 0;
@@ -76,15 +77,15 @@ public class CardBuilder extends JPanel {
         this.add(saveButton,gbc);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        this.add(newButton,gbc);
+        this.add(loadButton,gbc);
 
 
 
 
         //add listeners to buttons
-        nextButton.addActionListener(new CardBuilder.NextCardEventListener());
-        saveButton.addActionListener(new CardBuilder.SaveCardEventListener());
-        newButton.addActionListener(new CardBuilder.NewMenuListener());
+        nextButton.addActionListener(new EditCard.NextCardEventListener());
+        saveButton.addActionListener(new EditCard.SaveCardEventListener());
+        loadButton.addActionListener(new EditCard.LoadCardEventListener());
 
         //set menubar to frame
 
@@ -93,13 +94,24 @@ public class CardBuilder extends JPanel {
     }
 
 
-    public class NextCardEventListener implements ActionListener{
+    public class NextCardEventListener implements ActionListener {
         //TODO add empty card exception handling
         @Override
         public void actionPerformed(ActionEvent e) {
             Card card = new Card(question.getText(),answer.getText());
-            cardList.add(card);
-            clearCards();
+            cardList.set(cardCount,card);
+            if(cardCount>=cardList.size()-1){
+                cardCount =0;
+                question.setText(cardList.get(cardCount).getQuestion());
+                answer.setText(cardList.get(cardCount).getAnswer());
+            }else{
+                cardCount++;
+                question.setText(cardList.get(cardCount).getQuestion());
+                answer.setText(cardList.get(cardCount).getAnswer());
+            }
+
+
+
         }
     }
 
@@ -111,6 +123,15 @@ public class CardBuilder extends JPanel {
             fileSave.showOpenDialog(frame);
             saveFile(fileSave.getSelectedFile());
 
+        }
+    }
+    public class LoadCardEventListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileLoad = new JFileChooser();
+            fileLoad.showOpenDialog(frame);
+            loadFile(fileLoad.getSelectedFile());
         }
     }
     //Creates new card deck and clears the card
@@ -147,11 +168,33 @@ public class CardBuilder extends JPanel {
 
     }
 
+    public void loadFile(File file){
+        try {
+            reader = new BufferedReader( new FileReader(file));
+            String line = null;
+            while((line = reader.readLine())!=null){
+                makeCard(line);
+            }
+            question.setText(cardList.get(cardCount).getQuestion());
+            answer.setText(cardList.get(cardCount).getAnswer());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void makeCard(String lineToParase){
+        StringTokenizer parser = new StringTokenizer(lineToParase, "/");
+        if(parser.hasMoreTokens()){
+            Card card = new Card(parser.nextToken(),parser.nextToken());
+            cardList.add(card);
+        }
+    }
+
 
 
     //card builder
     //card player
 }
-
-
-

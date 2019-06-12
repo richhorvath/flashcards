@@ -25,6 +25,7 @@ public class GUI {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+        System.out.println("Started");
 
     }
 
@@ -40,8 +41,9 @@ public class GUI {
                     "Does nothing");
             tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
+            EditCard editPanel = new EditCard();
             JComponent panel2 = makeTextPanel("Panel #2");
-            tabbedPane.addTab("Edit", icon, panel2,
+            tabbedPane.addTab("Edit", icon, editPanel,
                     "Does twice as much nothing");
             tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
