@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a1c4b24d-fff0-4fd8-b25f-146ebfe2294b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/CardBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CardBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EditCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlayCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlayCard.java" afterDir="false" />
-    </list>
+    <list default="true" id="a1c4b24d-fff0-4fd8-b25f-146ebfe2294b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,8 +72,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CardBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+            <state relative-caret-position="-318">
+              <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -202,7 +198,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27498323" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -213,7 +208,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29985857" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.29985857" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -303,8 +298,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CardBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+        <state relative-caret-position="-318">
+          <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
         </state>
       </provider>
     </entry>
