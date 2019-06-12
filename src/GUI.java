@@ -38,20 +38,21 @@ public class GUI {
 
             CardBuilder createPanel = new CardBuilder();
             tabbedPane.addTab("Create", icon, createPanel,
-                    "Does nothing");
+                    "Create a new deck of flash cards");
             tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
             EditCard editPanel = new EditCard();
             JComponent panel2 = makeTextPanel("Panel #2");
             tabbedPane.addTab("Edit", icon, editPanel,
-                    "Does twice as much nothing");
+                    "Edit an existing deck of cards");
             tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
+            PlayCard playPanel = new PlayCard();
             JComponent panel3 = makeTextPanel("Panel #3");
-            tabbedPane.addTab("Play", icon, panel3,
-                    "Still does nothing");
+            tabbedPane.addTab("Play", icon, playPanel,
+                    "Play with a deck of cards");
             tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-            panel3.setPreferredSize(new Dimension(500, 500));
+            playPanel.setPreferredSize(new Dimension(500, 500));
 
 
 
